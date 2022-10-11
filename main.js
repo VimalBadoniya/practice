@@ -19,13 +19,18 @@ filter.addEventListener('keyup' , filterItem);
 function addItem(e){
     e.preventDefault();  //it is just to prevent the default behavior of form element
     var newItem = document.getElementById('add-item').value ; //take the text value which is to be added in the list .       if we don't add value , we are targetting element only , not its value
+
+    var description = document.getElementById('description').value; // take value of description
     
     // when form is submitted , a li element is to be created with the text and append it to the ul element
 
     var listItem = document.createElement('li');   //create li element
     listItem.id = 'new-Item' ; 
     var listItemValue = document.createTextNode(newItem);  //text of li element will be the text entered by the user
+
+    var descriptionText = document.createTextNode(" "+ description); // add description to text node
     listItem.appendChild(listItemValue);  // add text to li element
+    listItem.appendChild( descriptionText);
     itemList.appendChild(listItem);   // add newly created li element to the list
 
     //item can be added to the list but the delete button is not included
@@ -69,7 +74,8 @@ function filterItem(e){
 
     Array.from(items).forEach(function (item){
         var itemName = item.firstChild.textContent ; 
-        if(itemName.toLowerCase().indexOf(text)!=-1){
+        var itemDescription = item.childNodes[1].textContent ; 
+        if(itemName.toLowerCase().indexOf(text)!=-1 || itemDescription.toLowerCase().indexOf(text)!=-1){
             item.style.display = 'block'
 
         }

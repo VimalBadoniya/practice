@@ -10,6 +10,12 @@ form.addEventListener('submit' , addItem); //when form is submitted  , call addI
 // when delete button is clicked , delete the item 
 itemList.addEventListener('click' , deleteItem) ; 
 
+//search & filter the item
+var filter = document.getElementById('search');
+
+// when keyup event happens , match the item list with the text of the search box
+filter.addEventListener('keyup' , filterItem);
+
 function addItem(e){
     e.preventDefault();  //it is just to prevent the default behavior of form element
     var newItem = document.getElementById('add-item').value ; //take the text value which is to be added in the list .       if we don't add value , we are targetting element only , not its value
@@ -46,3 +52,33 @@ if(e.target.classList.contains('remove')) {
 }
 
 }
+
+
+function filterItem(e){
+    // take the text typed in search box & convert it to lower case for comparision
+    var text = e.target.value.toLowerCase();
+
+    //take all the li element for comparision
+    var itemList = document.querySelector('#list');
+    var items = itemList.getElementsByTagName('li');
+
+    //convert html collection of list items to array and apply a function for each item in array 
+    //function will compare the text with the item list 
+    //if matches , it will display matched item
+    // if not  matched , display nothing
+
+    Array.from(items).forEach(function (item){
+        var itemName = item.firstChild.textContent ; 
+        if(itemName.toLowerCase().indexOf(text)!=-1){
+            item.style.display = 'block'
+
+        }
+        else{item.style.display='none'}
+    })
+
+    
+
+}
+
+
+
